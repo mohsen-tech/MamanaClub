@@ -1,0 +1,125 @@
+﻿<!DOCTYPE HTML>
+<html>
+    <head> 
+        <script type='text/javascript' src='js/ul.js'></script> 
+        <script type="text/javascript" src="js/parsePersian.js"></script>
+        <script type='text/javascript' src='jquery.min.js'></script>
+        <link rel='stylesheet' href='css/nav.css'> 
+        <meta charset='UTF-8'>    
+    </head>
+
+<body class='tk_actionbar'>
+
+<div class="toolbar cheight">
+    <div class="IconNav cwidth cheight" onClick="Nav_OnClick()"></div>
+    <div class="IconLocation cwidth cheight" onClick="IconLocation_OnClick()"></div>
+    <div class="citylocation"></div>
+
+    <div class="IconLogo cheight"></div>
+    <div class="IconUpdate txtfa cwidth cheight" onclick="IconUpdate_OnClick()"></div>
+<!-- rotating -->
+</div>
+
+<script type="text/javascript"> 
+    var sizemenu=31;
+    var BetaLineHeight=17;
+    var QueryString=GetQueryString();
+    if(QueryString.size)sizemenu=QueryString.size;
+    $(".cheight").css({"height":sizemenu});
+    $(".cwidth").css({"width":sizemenu});
+
+    if (sizemenu>35)BetaLineHeight=28;
+    $(".Beta").css({"line-height":BetaLineHeight+"px"});
+
+
+    setInterval(function(){
+        if(!IsEmptyDV("citylocation"))
+           $(".citylocation").text(GetDV("citylocation"));
+        else
+           $(".citylocation").text("");
+    }, 60);
+
+    var urlDownload="";
+    $(".IconUpdate").css({"display":"none"});
+    //if(jsi()) setInterval(function(){CheckUpdate(); BtnChLogin();}, 6000); 
+    CheckUpdate();
+    BtnChLogin();
+    
+    function CheckUpdate(){
+        LoadGetJson(urlsite_tk+"/wservice/?Action=Init",true,function(val,dEnd)
+        { 
+            var verNum=JSInterface.GetVerNumber();
+
+            if(parseInt(val.apkNumber)>verNum)
+            {
+               $(".IconUpdate").css({"display":"block"});
+               urlDownload=val.apkUrl;
+            }
+            else
+            {
+               $(".IconUpdate").css({"display":"none"});
+               urlDownload="";
+            }
+
+        });
+    }
+
+    function IconLocation_OnClick()
+    {
+        JSInterface.NewPage("tk_pcats_city.html");
+    }
+    
+    function IconUpdate_OnClick(){
+        if(urlDownload!=""){
+            JSInterface.ConfirmT("بروز رسانی","آیا مایل به بروز رسانی هستید؟",urlDownload,"","OpenChrome")
+            //JSInterface.OpenChrome(urlDownload);
+        }
+    }
+    //-575px -1810px
+    function Nav_OnClick(){
+        JSInterface.OpenNav();
+    } 
+
+    var list_txtfa=$(".txtfa");
+    for(var il=0;il<list_txtfa.length;il++)
+    {
+        $(list_txtfa[il]).html(parsePersian($(list_txtfa[il]).text()));
+    } 
+
+
+
+   function BtnChLogin()
+   {
+      if(!(JSInterface.IsEmptyDV("usrId")|JSInterface.IsEmptyDV("pass")))
+      {
+          var usr=urlsite_tk+"/wservice/?action=Login&usr="+JSInterface.GetDV("usrId")+"&pwd="+JSInterface.GetDV("pass"); 
+          //JSInterface.Alert(usr); 
+          LoadGetJson(usr,true,SubChLogin);
+      }
+   }
+
+   function SubChLogin(val)
+   { 
+       //JSInterface.Alert(val.result);
+       if(parseInt(val.result)==-1)
+       { 
+            JSInterface.SetDV("usrId","");  
+            JSInterface.SetDV("pass","");
+            JSInterface.SetDV("id",""); 
+            JSInterface.SetDV("ut",""); 
+            JSInterface.SetDV("ul",""); 
+            JSInterface.SetDV("city",""); 
+            JSInterface.SetDV("nameuser",""); 
+            JSInterface.ExeFunc(1);
+       }
+   }
+   function Logo_OnClick(){
+       //JSInterface.OpenChrome("http://www.biamode.com/");
+       UpWin("loading.html");
+   }
+
+  
+</script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <link href="style.css" rel="stylesheet">
+    <style type="text/css">@import url("fonts/aaa.css");</style>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/ul.js"></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset="UTF-8"> 
+</head>
+
+
+<div style="text-align: center;">  
+ 
+<div>
+    <img class="img_tb_logo" src="img\loginPublic2.png">
+    <br>
+    <a href="#" class="BtnRegister txtfa" onclick="window.JSInterface.NewPage('http://www.biamode.com/MobilePage/Mobile_signup.aspx');">عضویت</a>
+    <br><br>
+    <a href="tk_enteruserpass.html" class="BtnLogin txtfa" onclick="ChengeUrl('tk_enteruserpass.html');">ورود</a>
+    <br>   <br>
+    <a href="tk_enteruserpass.html#f=1" class="BtnLogin txtfa" onclick="ChengeUrl('tk_enteruserpass.html#f=1');">ﺭﻣﺰ ﻋﺒﻮﺭ ﺭﺍ ﻓﺮﺍﻣﻮﺵ ﮐﺮﺩﻡ</a>
+</div>
+
+<script>
+window.onresize = function() 
+{
+   var hi=window.innerHeight-135-50;
+   var wm=window.innerWidth-4;
+   $(".img_tb_logo").css({"height":hi+"px","max-width":wm+"px"});
+}
+window.onresize();
+
+</script>
+
+
+
+<script type="text/javascript">
+	var list_txtfa=$(".txtfa");
+	for(var il=0;il<=list_txtfa.length;il++)
+	{
+		$(list_txtfa[il]).html(parsePersian($(list_txtfa[il]).text()));
+	} 
+</script>
+<div class='item_row'>
+
+</div>
+</body>
+
+</html>

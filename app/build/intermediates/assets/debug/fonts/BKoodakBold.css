@@ -1,0 +1,12 @@
+@font-face {
+font-family: 'BKoodakBold';
+src: url('./fonts/BKoodakBold.eot') format('eot'),
+url('./fonts/BKoodakBold.ttf') format('truetype'),
+url('./fonts/BKoodakBold.woff') format('woff');
+}
+@font-face {
+font-family: 'f5';
+src: url('./fonts/BKoodakBold.eot') format('eot'),
+url('./fonts/BKoodakBold.ttf') format('truetype'),
+url('./fonts/BKoodakBold.woff') format('woff');
+}

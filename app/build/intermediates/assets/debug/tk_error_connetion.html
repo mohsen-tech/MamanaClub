@@ -1,0 +1,54 @@
+﻿<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <link href="style.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet"> 
+
+    <style type="text/css">@import url("fonts/aaa.css");</style>
+    <script type="text/javascript" src="js/ul.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset="UTF-8"> 
+</head>
+
+<body>
+        <div id="acountBoxError">
+            <div class="ImageErrorConnect"> </div>
+            <br>
+            <div class="ErrorConnection">ﺧﻄﺎ ﺩﺭ ﺑﺮﻗﺮﺍﺭﯼ ﺍﺭﺗﺒﺎﻁ</div>
+        </div>
+
+        <script>
+            var QueryString=GetQueryString();
+
+            if(QueryString.bref)
+                setTimeout(ControlNewConnect,2000);
+             
+            function ControlNewConnect()
+            {
+                var url = "http://www.biamode.com/wservice/?Action=Items&sort=9&showimage=2&usrId=309";
+                var xmlhttp=new XMLHttpRequest(); 
+                xmlhttp.onreadystatechange=function()
+                {
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200)
+                    {
+                        try {  
+                            ChengeUrl(decodeURIComponent(QueryString.bref));
+                        }
+                        catch(err) {} 
+                    }
+
+                    if(xmlhttp.readyState==4 && xmlhttp.status==0)
+                    { 
+                        setTimeout(ControlNewConnect,2000);
+                    } 
+                }
+                xmlhttp.open("GET",url,true);
+                xmlhttp.send(); 
+            }
+        </script>
+</body>
+
+</html>

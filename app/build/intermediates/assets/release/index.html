@@ -1,0 +1,344 @@
+﻿<!DOCTYPE HTML>
+
+<html id="htmld" style="height: 100%;">
+
+<head>
+    <title>MamanaClub</title>
+    <link rel="stylesheet" href="css/general.css" media="all" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+    <script type="text/javascript" src="js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
+
+    <script type="text/javascript" src="js/general.js"></script>
+
+    <link href='css/font-awesome.min.css' rel='stylesheet'>
+    <link href='style.css' rel='stylesheet'>
+
+    <style type='text/css'>
+        @import url('fonts/aaa.css');
+    </style>
+    
+    <script type='text/javascript' src='js/ul.js'></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <script type='text/javascript' src='js/actionbar.js'></script>
+
+
+    <meta charset='UTF-8'>
+
+    <style>
+        .pages {
+            height: 100%;
+            width: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<temp style="display: none;">
+  <div id="SamplePostX" style="display:none;">
+     <a class="postX" onclick ="postX_onclick(idbox)" >
+        <div class="h2">title</div>
+        <img src="images/news.jpg" alt=""  class="news_thumbnail" />
+        <div class="postCon">content</div>
+        <!--<div class=""> -->
+        <div class="br"></div>
+    </a>
+  </div>
+</temp>
+
+<body style="height: 100%;">
+    <div id="all" style="height: 100%;">
+        <div class="IconUpdate txtfa cwidth cheight" onclick="IconUpdate_OnClick()" style="height: 6%; width: 31px; display: none;"></div>
+
+            <div class="contentposts"></div>
+            <!-- 		<div id="loader" style="display: none;"></div> -->
+        </div>
+    </div>
+    <div class="upbox" onclick="">^</div>
+
+    <script>
+       
+        //http://i-desk.ir/wservice/?Action=Items&module=Cat&type=News&pid=0&showimage=0&usrId=111111
+        var staticList = ([
+        {
+            items:
+            [
+            { name: 'اخبار شهرستان ها', id: 75 },
+            { name: 'اخبار اجتماعی', id: 77 },
+            { name: 'اخبار همایشها', id: 137 },
+            { name: 'آیا میدانید', id: 140 },
+            { name: 'آموزش ادواری', id: 148 }
+            ]
+        },
+        {
+            items:
+            [
+            { name: ' ', id: 00 }
+            ]
+        }
+        ]);
+
+        var jdata = [];
+        $(".List_items").append("");
+        var QueryString = GetQueryString();
+        if ((!QueryString.list) && (!QueryString.home) && (!QueryString.cat) && (!QueryString.inf) && (!QueryString.refahi))
+            QueryString.home = 1;
+
+
+        var startRec = 0;
+        var iFromRecStep = 20;
+        var ciFromRec = 0;
+        $(".contentposts").empty();
+        RunFromRec(0);
+
+        ScrollDown(".mbody", function () {
+            if (startRec == 0) {
+                startRec = 1;
+                ciFromRec += iFromRecStep;
+                RunFromRec(ciFromRec);
+            }
+        });
+
+
+        function RunFromRec(iFromRec) {
+            if (QueryString.refahi) {
+                DisableShowLoader = 1;
+                if (iFromRec == 0) $(".contentposts").append("<br>");
+                getList(staticList[QueryString.list]);
+                $("#loader").css({ "display": "none" });
+                DisableShowLoader = 1;
+                $(".postX .h2").css("padding-bottom", "0px");
+
+                var urlGet = urlsite + "/wservice/" + "?Action=Items&sort=1&showimage=2&usrId=14769&module=Cnt&type=Refahi&fromrec=" + iFromRec + "&maxno=20";
+                LoadGetJson(urlGet, getList);
+
+                NavUrl([
+                    { name: "صفحه اصلی", url: "index.html#home=1" },
+                    { name: "خدمات سازمانی", url: "index.html#refahi=0" }
+                ]);
+            }
+
+            if (QueryString.list) {
+                DisableShowLoader = 1;
+                if (iFromRec == 0) $(".contentposts").append("<br>");
+                //http://i-desk.ir/wservice/?Action=Cats&module=Cat&type=News&pid=0&showimage=0&usrId=111111
+
+                LoadGetJson(urlsite + "/wservice/?Action=Cats&module=Cat&type=Articles&pid=0&showimage=0&usrId=" + GetDV("id"), function (val, dEnd) {
+                    getList(val);
+                });
+
+                $("#loader").css({ "display": "none" });
+                DisableShowLoader = 1;
+                $(".postX .h2").css("padding", "20px 0px 10px 10px");
+                NavUrl([
+                        { name: "صفحه اصلی", url: "index.html#home=1" },
+                        { name: "دسته بندی مقالات", url: "index.html#list=0" }
+                ]);
+            }
+            else {
+                if (QueryString.inf) {
+                    var urlGet = urlsite + "/wservice/" + "?Action=Items&sort=1&showimage=0&usrId=" + GetDV("id") + "&module=Cnt&type=News&fromrec=" + iFromRec + "&maxno=20";
+                    LoadGetJson(urlGet, getList);
+
+                    NavUrl([
+                        { name: "صفحه اصلی", url: "index.html#home=1" },
+                        { name: "اخبار", url: "index.html#inf=0" }
+                    ]);
+                }
+
+                if (QueryString.cat) {
+                    var urlGet = urlsite + "/wservice/" + "?Action=Items&sort=1&showimage=2&usrId=14769&module=Cnt&type=Articles&fromrec=" + iFromRec + "&maxno=20&cat=" + QueryString.cat;
+                    LoadGetJson(urlGet, getList);
+                    NavUrl([
+                            { name: "صفحه اصلی", url: "index.html#home=1" },
+                            { name: "مقالات", url: window.document.URL }
+                    ]);
+                    $().css("display", "none")
+                }
+
+            }
+
+
+            var frmRec = 0;
+            if (QueryString.home) {
+                if (iFromRec == 0) $(".contentposts").append("<div class='brr topTools'></div>");
+                //http://www.i-desk.ir/wservice/?Action=Items&sort=1&showimage=2&usrId=14769&module=Cnt&type=Information&fromrec=0&maxno=20&Status=3
+
+                var urlGet = urlsite + "/wservice/" + "?Action=Items&sort=1&showimage=2&usrId=14769&module=Hlnk&type=Slide&fromrec=0&maxno=20";
+                if (iFromRec == 0) LoadGetJson(urlGet, getListSlide);
+
+                var urlGet = urlsite + "/wservice/" + "?Action=Items&sort=1&showimage=2&usrId=14769&module=Cnt&type=Events&fromrec=" + iFromRec + "&maxno=20&Status=3&cat=" + QueryString.cat;
+                LoadGetJson(urlGet, getList);
+                NavUrl([
+                        { name: "صفحه اصلی", url: "index.html#home=1" }
+                ]);
+            }
+            else {
+                if (iFromRec == 0) $(".contentposts").append("<div class='brr topTools'></div><br>");
+                $(".topTools").css({ "display": "none" });
+                $(".news_thumbnail").css({ "display": "none" });
+            }
+
+
+            iFromRec += iFromRecStep;
+        }
+
+
+        function getListSlide(v, n) {
+            if (!v) return;
+            if (!v.items) return;
+            var tli = "<li><img src='_addresimage' alt='_title'/></li>";
+            //$(".bxslider").empty();
+            for (var i = 0; i < v.items.length; i++) {
+                $(".mainSlide").append
+                (
+                  tli
+                  .replace("_addresimage", v.items[i].icon)
+                  .replace("_title", ppt(v.items[i].name))
+                );
+            }
+
+            $('.mainSlide').bxSlider({
+                mode: 'fade',
+                captions: true,
+                nextText: "",
+                prevText: "",
+                auto: true,
+                nextText: "",
+                prevText: "",
+                nextSelector: '.nextA',
+                prevSelector: '.prevA'
+            });
+
+
+
+            $(".mainSlide li").click(function () {
+                var idbox = v.items[$(this).index()].id;
+                curl("detail.html#inf=true&dti=" + idbox);
+            })
+
+
+        }
+
+        var DisableShowLoader = 0;
+        var public_v_items = [];
+
+        function getList(v, n, d) {
+            if (!v) {
+                if (DisableShowLoader == 0)
+                    $("#loader").fadeToggle("slow");
+                return;
+            }
+
+            if (!v.items) {
+                if (($("#loader").css("display") != "block"))
+                    $("#loader").fadeToggle("slow");
+
+                alert("فاقد مطالب");
+                return;
+            }
+            public_v_items = v.items;
+            var TextIsArchive = "<span class='archNews'>ﺁﺭﺷﯿﻮ ﺷﺪﻩ</span>";
+            if (DisableShowLoader == 0)
+                $("#loader").fadeIn("slow");
+
+            var listTag = "";
+            var srctag = $("#SamplePostX").html();
+            //$(".contentposts").append("<br>");
+            for (var i = 0; i < v.items.length; i++) {
+                var brief = ((v.items[i].brief) ? v.items[i].brief : "");
+                var icon = (v.items[i].icon) ? v.items[i].icon : "";
+                var IsArchive = "";
+
+                if (v.items[i].isArchive == "1")
+                    IsArchive = TextIsArchive;
+                var id = v.items[i].id;
+
+                if (QueryString.refahi)
+                    id = "'" + v.items[i].catId + "," + v.items[i].id + "'";
+
+                listTag += srctag
+                .replace("title", ppt(IsArchive + v.items[i].name))
+                .replace("content", ppt(brief))
+                .replace("idbox", id)
+                .replace("images/news.jpg", icon);
+            }
+
+            $(".contentposts").append(listTag);
+            //frmRec+=10;
+
+            if (DisableShowLoader == 0)
+                $("#loader").fadeToggle("slow");
+
+            DisableShowLoader = 0;
+
+            if (v.items.length < 20)
+                startRec = 100;
+            else
+                startRec = 0;
+        }
+
+        function postX_onclick(idbox) {
+            if (QueryString.list) {
+                var ttt = "";
+                for (var i = 0; i < staticList[0].items.length; i++)
+                    if (staticList[0].items[i].id == idbox) {
+                        ttt = staticList[0].items[i].name;
+                    }
+
+                curl("index.html#cat=" + idbox + "&title=" + ttt);
+                return;
+            }
+            if (QueryString.cat) {
+                curl("detail.html#dti=" + idbox);
+                return;
+            }
+            if (QueryString.inf) {
+                curl("detail.html#inf=true&dti=" + idbox);
+                return;
+            }
+            if (QueryString.home) {
+                curl("detail.html#inf=true&dti=" + idbox);
+                return;
+            }
+            if (QueryString.refahi) {
+                var addu = "&cat=" + idbox.split(",")[0] + "&id=" + idbox.split(",")[1];
+                curl("detail.html#inf=true&dti=" + idbox.split(",")[1] + "&refahi=0" + addu);
+                //OpenBrowser("http://www.i-desk.ir/MobilePage/Mobile_Frm_Refahi.aspx"+idbox);
+                return;
+            }
+            //alert(idbox);
+        }
+
+        //getList();
+
+        $('.upbox').click(function () {
+            $('.mbody').animate({
+                scrollTop: 0
+            }, 800);
+
+            $('.upbox').animate({
+                opacity: "1"
+            }, 800);
+            return false;
+        });
+
+
+        $(window).on('resize', function () {
+            //var win = $(this); //this = window
+            $(".mainSlide li").css({ "width": "100%" });
+        });
+
+        function Nav_OnClick() {
+            JSInterface.OpenNav();
+        }
+
+        function BtnIconUpdate_OnClick() {
+            IconUpdate_OnClick();
+        }
+    </script>
+</body>
+
+</html>

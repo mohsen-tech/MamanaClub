@@ -1,0 +1,12 @@
+@font-face {
+font-family: 'BBCNassim';
+src: url('./fonts/BBCNassim.eot') format('eot'),
+url('./fonts/BBCNassim.ttf') format('truetype'),
+url('./fonts/BBCNassim.woff') format('woff');
+}
+@font-face {
+font-family: 'f2';
+src: url('./fonts/BBCNassim.eot') format('eot'),
+url('./fonts/BBCNassim.ttf') format('truetype'),
+url('./fonts/BBCNassim.woff') format('woff');
+}

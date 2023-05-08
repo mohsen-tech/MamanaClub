@@ -1,0 +1,20 @@
+@font-face {
+font-family: 'BTitrBold';
+src: url('./fonts/BTitrBold.eot') format('eot'),
+url('./fonts/BTitrBold.ttf') format('truetype'),
+url('./fonts/BTitrBold.woff') format('woff');
+}
+@font-face {
+font-family: 'f8';
+src: url('./fonts/BTitrBold.eot') format('eot'),
+url('./fonts/BTitrBold.ttf') format('truetype'),
+url('./fonts/BTitrBold.woff') format('woff');
+}
+
+
+.icon_oc {
+    height: 12px;  /* background-color: white; */  
+    background-image: url('../img/ic_deal_bottom_arrow.png');  background-repeat: space;  width: 20px;  background-size: 100% 100%;  position: absolute;  left: 2px;  
+    margin-top: 4px;
+    left: 7px;
+}

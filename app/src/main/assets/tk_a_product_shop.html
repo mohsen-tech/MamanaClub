@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <link href='style.css' rel='stylesheet'>
+    <link href='css/font-awesome.min.css' rel='stylesheet'>
+    <link href='css/tk-style.css' rel='stylesheet'>
+
+    <style type='text/css'>@import url('fonts/aaa.css');</style>
+    <script type='text/javascript' src='js/ul.js'></script>
+    <script type='text/javascript' src='jquery.min.js'></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset='UTF-8'>   
+    
+</head>
+
+<body class='bodystyle tk_a_product_shop'>
+
+<div class="BoxOpenEm">
+<div class="NumberS">
+  <div class="NumberSTxt">ﺗﻌﺪﺍﺩ:</div>
+    <select onchange="CalcMandeh();"  class="numberProduct BoderItems" type="number" name="quantity">
+      <option value="1" selected>1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="10">11</option>
+      <option value="10">12</option>
+      <option value="10">13</option>
+      <option value="10">14</option>
+      <option value="10">15</option>
+      <option value="10">16</option>
+      <option value="10">17</option>
+      <option value="10">18</option>
+      <option value="10">19</option>
+      <option value="10">20</option>
+    </select>
+</div>
+<br>
+
+<div class="MoshahedeMande">
+
+</div>
+
+</br>
+<div class="postTitle traget" onclick="OpTg('.table_a_product_shop')"><div class="icon_oc"></div> <div class="t_traget txtfa">ﻫﺪﯾﻪ ﺑﻪ ﺩﻭﺳﺘﺎﻥ</div></div>
+</div>
+
+<table border=1 class="table_a_product_shop">
+
+<tr> 
+    <td><input type="email" class="email BoderItems" placeholder="ﺍﯾﻤﯿﻞ"></input></td>
+</tr>
+
+<tr> 
+    <td><input class="Tilte BoderItems" placeholder="ﻧﺎﻡ"></input></td>
+</tr>
+
+
+<tr> 
+    <td><input type="text" class="Mobilet BoderItems" placeholder="ﻣﻮﺑﺎﯾﻞ"></input></td>
+</tr>
+
+<tr> 
+    <td><textarea class="Desc BoderItems" placeholder="ﺗﻮﺿﯿﺤﺎﺕ"></textarea></td>
+</tr>
+</table>
+
+<div class="butShop txtFa" onclick="ShopEnd();">ﺧﺮﯾﺪ</div>
+
+ 
+
+
+<script type="text/javascript">
+    var QueryString=GetQueryString();
+
+    CalcMandeh();
+
+    function CalcMandeh(){
+        var vh="";
+        var number = $(".numberProduct").val();
+        vh+="ﺟﻤﻊ ﮐﻞ: ";
+        vh+=(QueryString.price*number);
+        vh+=" " + ppt(QueryString.pricevahed) + " ";
+        
+        $(".MoshahedeMande").html(vh);
+    }
+
+    var list_txtfa=$(".txtfa");
+    for(var il=0;il<list_txtfa.length;il++)
+    {
+        $(list_txtfa[il]).html(parsePersian($(list_txtfa[il]).text()));
+    } 
+    OpTg('.table_a_product_shop');
+
+    function OpTg(divco){
+      $(divco).toggle();
+    }
+
+    function ShopEnd(){
+        var usrId="";
+        if(jsi())
+        {
+            usrId= GetDV("id");
+            if(IsEmptyDV("id"))
+            { 
+                SetBackHref();
+                ChengeUrl("tk_login.html");
+                return;
+            }
+        }
+        else
+        {
+            SetBackHref();
+            ChengeUrl("tk_login.html");
+        }
+
+        if(usrId=="")usrId=-1;
+        
+        var number=$(".numberProduct").val();
+        var email=$(".email").val();
+        var namen=$(".Tilte").val();
+        var des=$(".Desc").val();
+        var Mobilet=$(".Mobilet").val();
+        var turl="Mobile_GiftBasket.aspx?usrId=_usrid&mid=_mid&id=_id&buycount=_bc&frndName=ali&frndEmail=a@b.com&frndMobile=0915&frndMsg=hello";
+        
+        turl=turl.replace("hello",des);
+        turl=turl.replace("_usrid",usrId);
+        turl=turl.replace("_mid",QueryString.mmid);
+        turl=turl.replace("_id",QueryString.pid);
+        turl=turl.replace("_bc",number);
+        turl=turl.replace("0915",Mobilet);
+        turl=turl.replace("ali",namen);
+        turl=turl.replace("a@b.com",email);
+        var murl=urlsite_tk + "/MobilePage/" + turl;
+          
+        JSInterface.OpenChrome(murl);
+    }
+
+</script> 
+</body>
+
+</html>

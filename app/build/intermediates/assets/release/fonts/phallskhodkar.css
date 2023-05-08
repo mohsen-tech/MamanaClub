@@ -1,0 +1,10 @@
+@font-face {
+font-family: 'phallskhodkar';
+src: url('./fonts/phallskhodkar.otf') format('opentype'),
+url('./fonts/phallskhodkar.ttf') format('truetype');
+}
+@font-face {
+font-family: 'f13';
+src: url('./fonts/phallskhodkar.otf') format('opentype'),
+url('./fonts/phallskhodkar.ttf') format('truetype');
+}

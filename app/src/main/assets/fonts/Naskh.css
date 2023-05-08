@@ -1,0 +1,10 @@
+@font-face {
+font-family: 'Naskh';
+src: url('./fonts/Naskh.otf') format('opentype'),
+url('./fonts/Naskh.ttf') format('truetype');
+}
+@font-face {
+font-family: 'f12';
+src: url('./fonts/Naskh.otf') format('opentype'),
+url('./fonts/Naskh.ttf') format('truetype');
+}

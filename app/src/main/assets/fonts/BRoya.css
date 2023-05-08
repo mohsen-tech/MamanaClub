@@ -1,0 +1,10 @@
+@font-face {
+font-family: 'BRoya';
+src: url('./fonts/BRoya.otf') format('opentype'),
+url('./fonts/BRoya.ttf') format('truetype');
+}
+@font-face {
+font-family: 'f7';
+src: url('./fonts/BRoya.otf') format('opentype'),
+url('./fonts/BRoya.ttf') format('truetype');
+}

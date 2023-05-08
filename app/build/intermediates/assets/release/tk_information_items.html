@@ -1,0 +1,70 @@
+﻿<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <link href="style.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet"> 
+
+    <style type="text/css">@import url("fonts/aaa.css");</style>
+    <script type="text/javascript" src="js/ul.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset="UTF-8"> 
+</head>
+
+<body class="body_post_inf">
+
+<script>
+//720x1280 
+var QueryString=GetQueryString();
+if(!QueryString.pid)
+{
+    QueryString.pid=8561;
+    QueryString.m=0;
+}
+
+var urlGet="";
+if(window.JSInterface)
+{
+    window.alert=window.JSInterface.Alert;
+}
+ 
+
+GetListApp(); 
+function GetListApp()
+{
+    urlGet="";
+    if(QueryString.m==0)
+        urlGet=urlsite_tk
+        +"/wservice/default.aspx?Action=Detail&module=Cnt&type=help&usrid=109&AutoLang=FA&showimage=1&showimage=2&id="+QueryString.pid;
+       
+    if(QueryString.m==1)
+        urlGet=urlsite_tk
+        +"/wservice/default.aspx?Action=Detail&module=Smp&usrid=109&AutoLang=FA&showimage=2&type="+QueryString.pid;
+    
+    LoadGetJson(urlGet,function(val,dEnd){
+       var it=val.items[0];
+       $(".content_post").html(it.id);
+       $(".title_post_inf").html(ppt(it.name));
+       $(".content_post_inf").html(ppt(it.body));
+       $(".img_post_inf").attr("src",it.icon);
+    });
+}
+
+ 
+ 
+</script>
+<div class="box_post_inf">
+    <div class="title_post_inf">
+    
+    </div>
+	
+    <img class="img_post_inf" src="http://www.biamode.com/Images/AdvCntImages/help/Cnt8599/Thumb8599.png">
+    <div class='content_post_inf'>
+    
+    </div>
+</div>
+</body>
+
+</html>  

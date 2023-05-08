@@ -1,0 +1,83 @@
+@font-face {
+font-family: 'BKoodakBold';
+src: url('./fonts/BKoodakBold.eot') format('eot'),
+url('./fonts/BKoodakBold.ttf') format('truetype'),
+url('./fonts/BKoodakBold.woff') format('woff');
+}
+
+@font-face {
+font-family: 'BYekan';
+src: url('./fonts/BYekan.eot') format('eot'),
+url('./fonts/BYekan.ttf') format('truetype'),
+url('./fonts/BYekan.woff') format('woff');
+}
+
+@font-face {
+font-family: 'yekan';
+src: url('./fonts/BYekan.eot') format('eot'),
+url('./fonts/BYekan.ttf') format('truetype'),
+url('./fonts/BYekan.woff') format('woff');
+}
+
+@font-face {
+font-family: 'BBCNassim';
+src: url('./fonts/BBCNassim.eot') format('eot'),
+url('./fonts/BBCNassim.ttf') format('truetype'),
+url('./fonts/BBCNassim.woff') format('woff');
+}
+
+@font-face {
+font-family: 'BKoodak';
+src:url('./fonts/BKoodak.ttf') format('truetype');
+}
+@font-face {
+font-family: 'BRoya';
+src: url('./fonts/BRoya.otf') format('opentype'),
+url('./fonts/BRoya.ttf') format('truetype');
+}
+@font-face {
+font-family: 'Naskh';
+src: url('./fonts/Naskh.otf') format('opentype'),
+url('./fonts/Naskh.ttf') format('truetype');
+}
+@font-face {
+font-family: 'phallskhodkar';
+src: url('./fonts/phallskhodkar.otf') format('opentype'),
+url('./fonts/phallskhodkar.ttf') format('truetype');
+}
+
+@font-face {
+font-family: 'BTitrBold';
+src: url('./fonts/BTitrBold.eot') format('eot'),
+url('./fonts/BTitrBold.ttf') format('truetype'),
+url('./fonts/BTitrBold.woff') format('woff');
+}
+
+@font-face {
+font-family: 'BNazanin';
+src: url('./fonts/BNazanin.ttf') format('truetype');
+}
+
+@font-face {
+font-family: 'IranianSans';
+src: url('./fonts/IranianSans.ttf') format('truetype');
+}
+@font-face {
+font-family: 'AGoogle';
+src: url('./fonts/AGoogle.ttf') format('truetype');
+}
+
+@font-face {
+font-family: 'Shia';
+src: url('./fonts/Shia.ttf') format('truetype');
+}
+
+@font-face {
+font-family: 'Entezar2';
+src: url('./fonts/Entezar2.ttf') format('truetype');
+}
+
+@font-face {
+font-family: 'Besmellah';
+src: url('./fonts/Besmellah.ttf') format('truetype');
+}

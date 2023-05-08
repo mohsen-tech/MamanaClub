@@ -1,0 +1,205 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <link href="style.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/tk-style.css" rel="stylesheet">
+
+    <style type="text/css">@import url("fonts/aaa.css");</style>
+    <script type="text/javascript" src="js/ul.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset="UTF-8"> 
+     
+    <style> 
+/*         @media screen and (max-width: 530px) {
+            body {
+                background-color: red;
+            }
+
+            .todayDiscont2.box{
+                width: 255px;
+                width: 98%;
+            }       
+              
+            .ListBox{
+                display: initial;
+            }    
+        } */
+         body {
+                background-color: red;
+            }
+
+            .todayDiscont2.box{
+                width: 255px;
+                width: 98%;
+            }       
+              
+            .ListBox{
+                display: initial;
+            }  
+    </style>
+
+</head>
+
+<body class="bodystyle">
+
+<div class="aItemsRow" style="display:none;">
+    <table border=0 class="rowTableProduct">
+        <tr>
+            <td rowspan="3"><div class="imgProduct" style="background-image:url('img_the_product');"></div></td>
+            <td>ارزش</td>
+            <td colspan="3"> <div class="todayDisPos3"><div class="priceA priceS">paaaa</div>  <div class="priceB priceS">pbbbb</div>  <div class="priceC priceS">rial</div></div> </td>
+        </tr>
+        <tr>
+            <td>تخفیف</td>
+            <td>50%</td>
+            <td colspan="2">movjood</td> 
+        </tr>
+        <tr>
+            <td>تاریخ انقضا</td>
+            <td><div class="DataEp">1394/5/3</div></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="5"><div class="ButtonProduct" onclick="ClickOnProduct(pid)"></div></td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="ListBox">
+    <div class="testboxsample List_itemsSample" style="display:none;">
+        <div class="todayDiscont2 box"  onclick="p_click(iidd);" >
+            <a href="#" class="thumb2">
+                <img class='imgprod3' src='img/tk/logo.png'>
+            </a>
+            <h3 class="todayDisTitle2">فروش فوق العاده مبلمان</h3>
+            <div class="todayDisDet2">
+                <div class="todayDisVal2 ">30%</div>
+                <div class="todayDisPos2"><a href="#">مشهد</a></div>
+                <div class="todayDisSellNum2" style="display:none;">
+                    <span>۰</span>
+                </div>
+                <div class="todayDisFaNum2">
+                    <div id="favicon8525" class="slideFavBox favlit tooltip" tiptitle="افزودن به علاقه مندی" onclick="showLogin('idss')" original-title="">201b</div>
+                </div>
+            </div>
+            <br>
+            <div class="todayDisDet2 todayDisDet3 ">
+                <div class="todayDisPos3"><div class="priceA priceS" href="#">120000</div>  <div class="priceB priceS" href="#">180000</div>  <div class="priceC priceS" href="#">tooman</div></div>
+                <div class="todayDisSellNum2" style="display:none;">
+                    <span>۰</span>
+                </div>
+                <div class="todayDisFaNum2">
+                    <div id="favicon8525" class="favlit tooltip iconSabad" tiptitle="افزودن به علاقه مندی" onclick="showLogin('idss')" original-title="">202b</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+//
+
+var QueryString=GetQueryString();
+
+if(QueryString.cat==undefined)
+   QueryString.cat=0;
+
+
+var v=document.getElementById("dughui");
+
+GetListProductAndCats();
+
+function GetListProductAndCats()
+{ 
+    if(QueryString.usrid)
+    {
+        var surl=urlsite_tk+"/wservice/?Action=Items&sort=9&showimage=2&usrId="+QueryString.usrid;
+        LoadGetJson(surl,GetListProduct);
+        return;
+    }
+
+    if(QueryString.city)
+    {
+        var burl=urlsite_tk+"/wservice/default.aspx?Action=Items&showimage=2&city="+QueryString.city;
+        if(QueryString.area)
+           burl=urlsite_tk+"/wservice/default.aspx?Action=Items&showimage=2&city="+QueryString.city+"&area="+QueryString.area;
+             
+        LoadGetJson(burl,GetListProduct);
+    }
+    else
+    {
+        LoadGetJson(urlsite_tk+"/wservice/default.aspx?app_test=1&Action=Items&module=Cnt&type=GiftCard&usrid=&AutoLang=FA&showimage=2&sort=1&fromrec=0&maxno=200&cat="+QueryString.cat+"&scat=&id=&pid=&relid=&rate=&cmd=&_t=1423382370607",GetListProduct);
+    }
+}
+
+ 
+
+
+function tbList_onclick(val)
+{
+    window.JSInterface.Alert(val);
+}
+
+function GetListProduct(val)
+{  
+    var List_itemsSample = document.getElementsByClassName("List_itemsSample")[0].innerHTML;
+ 
+    var rows="";
+    var ob=val.items;
+     
+    if(!val.items)
+    { 
+        if(QueryString.usrid)
+           $(".ListBox").append("<div class='bzoodi' style='margin: 0 auto;text-align: center;'>"+ppt("هیچ علاقه مندی وجود ندارد")+"</div>");   
+        else
+           $(".ListBox").append("<div class='bzoodi' style='margin: 0 auto;text-align: center;'>"+ppt("به زودی")+"</div>");   
+           
+       
+        return; 
+    }
+    
+    
+    if((!val.items)|(!val))
+    {
+        if(QueryString.usrid)
+           $(".ListBox").append("<center class='bzoodi' style='font-family: f9;'>"+ppt("هیچ علاقه مندی وجود ندارد")+"</center>");   
+        else
+           $(".ListBox").append("<center class='bzoodi' style='font-family: f9;'>"+ppt("به زودی")+"</center>");   
+           
+    }
+
+    for(var i=0;i<ob.length;i++){
+        var a_row=List_itemsSample
+        .replace("فروش فوق العاده مبلمان",ppt(ob[i].name))
+        .replace("img/tk/logo.png",ob[i].icon)
+        .replace("مشهد",ppt(ob[i].city))
+        .replace("120000",ob[i].priceToPay)
+        .replace("180000",ob[i].mainPrice)
+        .replace("30%",ob[i].Off+"%")
+        .replace("idss",ob[i].id)
+        .replace("202b",ob[i].saleCount)
+        .replace("201b",ob[i].favCount)
+        .replace("iidd",ob[i].id)
+        .replace("tooman",ppt(val.settings.currency))
+        ; 
+        rows=rows+a_row;
+    }
+    
+    $(".ListBox").append(rows); 
+}
+
+function p_click(iidd)
+{ 
+   ChengeUrl("tk_a_product.html#pid="+iidd);
+}
+</script>
+
+</body>
+

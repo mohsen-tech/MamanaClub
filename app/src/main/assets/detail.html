@@ -1,0 +1,361 @@
+﻿<!DOCTYPE HTML>
+
+<html id="htmld" style="height: 100%;">
+
+<head>
+    <title>RAZAVI AGRI</title>
+    <link rel="stylesheet" href="css/general.css" media="all" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+    <script type="text/javascript" src="js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="js/jquery.bxslider.min.js"></script>
+
+    <script type="text/javascript" src="js/general.js"></script>
+
+    <link href='css/font-awesome.min.css' rel='stylesheet'>
+    <link href='style.css' rel='stylesheet'>
+
+    <style type='text/css'>
+        @import url('fonts/aaa.css');
+    </style>
+    <script type='text/javascript' src='js/ul.js'></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset='UTF-8'>
+
+    <style>
+        .pages {
+            height: 100%;
+            width: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+
+
+<body style="height: 100%;">
+    <div id="all" style="height: 100%;">
+        
+        <div class="mbody scrollA">
+            <div class="contentposts">
+                <br>
+                <div id="postsBox">
+                    <div class="postX">
+                        <br>
+                        <div class="div_img_postX">
+                            <div class="detailRi_da">
+                                <div class="detail_Reting">
+                                    <select onchange="ChangeAddRate(this)" class="reting">
+                                        <option>به این مطلب امتیاز دهید</option>
+                                        <option value="5">5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                        <select>
+                                </div>
+                                <div class="amar">
+                                    <div class="amar_inner">0</div>
+                                    <span class="amar_inner2">تعداد بازدید:</span> </div>
+
+
+                            </div>
+
+                            <div class="detailRi_da2">
+                                <div class="dateText">
+                                    <div class="detail_date"></div>
+                                    <span>تاریخ:</span> </div>
+                                <div class="Cl_isArchive archNews"></div>
+                            </div>
+                            <br>
+                            <a class="h2 title_postX"></a>
+                            <img class="img_postX" src="" onerror="onerrorimg_send(this);"></img>
+                        </div>
+                        <br>
+                        <div class="postCon">
+                        </div>
+                        <div class="AttachFile">
+                            <div>
+                                <img class="img_AttachFile"></img>
+                                <span class="text_AttachFile">دریافت فایل پیوست</span> </div>
+
+                            <div class="br"></div>
+                            <div class="savecmd ORegsterRefahi">
+                                <button class="txtfa btnr" id="SaveConmment" onclick="RegsterRefahi()">ثبت نام</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div onclick="Open_box_commend(this)" class="Open_box_commend" style="display: block">
+                    <div class="Open_box_commend_txt">ارسال نظر</div>
+                    <div class="Open_box_commend_icon">^</div>
+                </div>
+
+                <div class="All_box_commend" style="display: none">
+                    <div class="box_commend hideA" style="display: inherit;">
+                        <input type="text" id="alisa" placeholder="نام">
+                        <br>
+                        <textarea id="textCommend" placeholder="نظر شما"></textarea>
+                        <br>
+                        <div class="savecmd">
+                            <button class="txtfa btnr" id="SaveConmment" onclick="SendCommend()">ﺍﺭﺳﺎﻝ</button>
+                        </div>
+                    </div>
+                    <div class="ShowCommand">
+                    </div>
+                </div>
+
+                <!-- 		<div id="loader" style="display: block;"></div> -->
+            </div>
+
+        </div>
+        <div class="upbox" onclick="">^</div>
+
+
+        <script>
+
+
+            var jdata = [];
+
+            var QueryString = GetQueryString();
+            if (!QueryString.pid) QueryString.pid = 0;
+
+            if (QueryString.refahi) {
+                $(".ORegsterRefahi").css("display", "block");
+                $(".Open_box_commend").css("display", "none");
+            }
+            if (QueryString.grg) {
+                var urlGet = urlsite + "/wservice/" + "?Action=Detail&showimage=0&usrId=" + GetDV("id") + "&module=Smp&type=FamilyCulture";
+                LoadGetJson(urlGet, getDetail);
+                $(".detailRi_da").css("display", "none");
+                $(".detailRi_da2").css("display", "none");
+                $(".Open_box_commend").css("display", "none");
+
+
+                NavUrl([
+                { name: "صفحه اصلی", url: "index.html#home=1" },
+                { name: "فرهنگسرای خانواده", url: "detail.html#grg=0" }
+                ]);
+            }
+
+            if (QueryString.Club) {
+                var urlGet = urlsite + "/wservice/" + "?Action=Detail&showimage=0&usrId=" + GetDV("id") + "&module=Smp&type=BahamClub";
+                LoadGetJson(urlGet, getDetail);
+                $(".detailRi_da").css("display", "none");
+                $(".detailRi_da2").css("display", "none");
+                $(".Open_box_commend").css("display", "none");
+
+
+                NavUrl([
+                { name: "صفحه اصلی", url: "index.html#home=1" },
+                { name: "معرفی باشگاه باهم", url: "detail.html#Club=0" }
+                ]);
+            }
+
+
+            if (QueryString.pre) {
+                var urlGet = urlsite + "/wservice/?Action=Items&sort=1&showimage=2&usrId=" + GetDV("id") + "&module=Smp&type=AboutUs&fromrec=0&maxno=1";
+                LoadGetJson(urlGet, getDetail);
+                $(".detailRi_da").css("display", "none");
+                $(".detailRi_da2").css("display", "none");
+                $(".Open_box_commend").css("display", "none");
+
+
+                NavUrl([
+                    { name: "صفحه اصلی", url: "index.html#home=1" },
+                    { name: "معرفی باشگاه", url: "detail.html#pre=0" }
+                ]);
+            }
+
+
+
+            if (QueryString.dti) {
+                var urlGet = urlsite + "/wservice/" + "?Action=Detail&sort=9&showimage=2&usrId=" + GetDV("id") + "&module=Cnt&type=Events&showattach=1&fromrec=0&maxno=20&id=" + QueryString.dti;
+                LoadGetJson(urlGet, getDetail);
+
+                NavUrl([
+                    { name: "صفحه اصلی", url: "index.html#home=1" },
+                    { name: "برنامه های باشگاه", url: "index.html#list=0" }
+                ]);
+            }
+
+            function ChangeAddRate(el) {
+                var v = $(el).val();
+                var urlGet = urlsite + "/wservice/" + "?Action=AddRate&relid=" + QueryString.dti + "&rate=" + v;
+                LoadGetJson(urlGet, ChangeAddRateReturn);
+            }
+
+            function ChangeAddRateReturn(v, n) {
+
+                if (v.result == "1") {
+                    $(".reting").css("display", "none");
+                    alert("با تشکر رای شما ثبت شد");
+                }
+            }
+
+            function getDetail(v, n) {
+                if (!v) return;
+                if (!v.items) { $("#loader").fadeToggle("slow"); alert("خطا"); return; }
+                var TextIsArchive = "<span class='archNews'>ﺁﺭﺷﯿﻮ ﺷﺪﻩ</span>";
+                var page = v.items[0];
+                var IsArchive = "";
+
+                if (page.isArchive)
+                    if (page.isArchive == "1") $(".Cl_isArchive").text(ppt("آرشیو شده"));
+
+                $("#loader").fadeIn("slow");
+                page.body = page.body.replace(" width=", "").replace(" width=", "").replace(" width=", "");
+                page.body = page.body.replace("font-size", "").replace("font-size", "").replace("font-size", "").replace("font-size", "").replace("font-size", "");
+                //font-size
+
+                $(".img_postX").attr("src", "");
+                $(".title_postX").text(IsArchive + page.name);
+                $(".postCon").html(page.body);
+                $(".detail_date").text(page.createDate);
+                $(".amar_inner").text(page.visitCount);
+
+                //$("#loader").fadeToggle("slow");
+                //img_AttachFile text_AttachFile
+
+                $(".img_AttachFile").attr("src", page.attachIcon);
+                $(".text_AttachFile").attr("onclick", "OpenBrowser('" + page.attachLink + "');");
+                if (page.attachLink == "") $(".text_AttachFile").css("display", "none");
+
+                $(document).ready(function () {
+                    $('a').click(function (e) {
+                        var txtUrl = $(this).removeAttr('target').attr('href');
+
+                        if (txtUrl.length > 1) {
+                            console.log("Open Browser:" + txtUrl);
+                            OpenBrowser(txtUrl);
+                        }
+
+                        e.preventDefault();
+                        return false;
+                    });
+                });
+
+                cnt_Reference = page.reference;
+            }
+
+            var url_GetCmd = urlsite + "/wservice/?Action=GetCmd&relid=" + QueryString.dti;
+            LoadGetJson(url_GetCmd, GetCmd);
+            function GetCmd(v, n) {
+                if (!v) return;
+                if (!v.items) { return; }
+
+                var Sample_aCommad = $(".div_comment_sample").html();
+
+                $(".ShowCommand").empty();
+                var datext = "تاریخ ارسال: ";
+                for (var i = 0; i < v.items.length; i++) {
+                    $(".ShowCommand").append(
+                        Sample_aCommad
+                        .replace("_name", ppt(datext + v.items[i].alias))
+                        .replace("_date", ppt(v.items[i].sendDate))
+                        .replace("_text", ppt(v.items[i].cmdText))
+                    );
+                }
+            }
+
+            function postX_onclick(idbox) {
+                if (QueryString.list) {
+                    curl("index.html#cat=" + idbox);
+                    return;
+                }
+                if (QueryString.cat) {
+                    // 	   curl("index.html#dti="+idbox);
+                    // 	   return;
+                }
+                alert(idbox);
+            }
+
+
+            ScrollDown(".mbody", function () {
+                //getList();
+            });
+
+            $('.upbox').click(function () {
+                $('.mbody').animate({
+                    scrollTop: 0
+                }, 800);
+                return false;
+            });
+
+
+            $(window).on('resize', function () {
+                //var win = $(this); //this = window
+                //   $(".bxslider li").css({"width":"100%"});
+            });
+
+            function Nav_OnClick() {
+                JSInterface.OpenNav();
+            }
+
+            function SendCommend() {
+                var alisa = $("#alisa").val();
+                var textCommend = $("#textCommend").val();
+                if (textCommend == "") return;
+
+                textCommend = textCommend.replace("\n", "<br>").replace("\r", "").replace("\"", "");
+                LoadGetJson(urlsite + "/wservice/?Action=Comment&relid=" + QueryString.dti + "&Alias=" + alisa + "&cmd=" + textCommend, SuccessSendCommend);
+                $("#SaveConmment").css("display", "none");
+            }
+
+            function SuccessSendCommend(val) {
+                alert("پیام ارسال شد");
+            }
+
+            function onerrorimg_send(el) {
+                $(el).css("display", "none");
+            }
+
+            function Open_box_commend(el) {
+                var es = $(".All_box_commend").css("display");
+                if (es == "none")
+                    $(".All_box_commend").css("display", "block");
+                else
+                    $(".All_box_commend").css("display", "none");
+            }
+
+            function RegsterRefahi() {
+                if (cnt_Reference == "1") {
+                    alert(" ‫ثبت نام در این خدمت صرفا ویژه اعضا می باشد‬ ");
+                    return;
+                }
+                var aurl = "&cat=" + QueryString.cat + "&id=" + QueryString.id + "&dti=" + QueryString.id;
+                // 	if(IsEmptyDV("id"))
+                // 	{
+                // 		SetDV("BackHref","detail.html#inf=true&refahi=0"+aurl);//detail.html#inf=true&dti=759&refahi=0
+                // 		curl("tk_enteruserpass.html");
+                // 		return;
+                // 	}
+                var UserId = GetDV("id");
+                aurl = "?cat=" + QueryString.cat + "&id=" + QueryString.id + "&usrId=" + UserId;
+
+                curl("iframe.html#index=2&aurl=" + encodeURIComponent(aurl));
+            }
+
+        </script>
+
+
+        <div class="div_comment_sample" style="display: none;">
+            <div class="div_comment">
+                <div class="divBody">
+                    <div class="senderName">
+                        _name
+                    </div>
+                    <div class="desc">
+                        _text
+                    </div>
+                    <div class="date">_date</div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+﻿<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <link href="style.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet"> 
+
+    <style type="text/css">@import url("fonts/aaa.css");</style>
+    <script type="text/javascript" src="js/ul.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset="UTF-8"> 
+</head>
+
+
+<body onscroll="tbList_onscroll()">
+
+<div class="SampleTB" style="display: none;">
+<table class='tbList' id='tbList' onclick='tbList_onclick(codelink)'  border=0> 
+	<tr>
+		<td rowspan='2' class='tbImagetk'>
+			<div class='tbmenu'>...</div>
+		</td>
+		<td>
+			<div>
+				<div class='tbTitle'>Name App</div>
+			</div>
+		</td> 
+		<td rowspan='2' class='EndText'>
+			<img class='tbImagetk' src='img/defcat.png'  >
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div class='tbVersion'>ValueVersion</div>
+		</td> 
+	</tr>
+	<tr class='tbBottom'>
+	</tr>
+</table>
+</div>
+
+
+
+<div class="List_itemsM">
+ 
+</div>
+
+
+<script>
+//720x1280 
+var QueryString=GetQueryString();
+if(!QueryString.pid)QueryString.pid=0;
+
+if(window.JSInterface)
+{
+    window.alert=window.JSInterface.Alert;
+}
+ 
+
+GetListApp();
+var run_GetListApp=false;
+function GetListApp()
+{
+    var urlGet=urlsite_tk+"/wservice/default.aspx?app_test=1&Action=Cats&module=Cnt&type=GiftCard&usrid=&AutoLang=FA&showimage=2&sort=1&fromrec=0&maxno=20&cat=&scat=&id=&pid=0&relid=&rate=&cmd=&_t=1423389509572";
+    var jdata=[];
+    LoadGetJson(urlGet,function(val,dEnd){
+        jdata=val;  
+        var row_sample=$(".SampleTB").html();//"<table class='tbList' id='tbList' onclick='tbList_onclick(\"codelink\")'  border=0> <tr><td rowspan='2' class='tbImagetk'><img class='tbImagetk' src='a.png' onerror=\"this.onerror=null;alert();this.src='img/tk_logodf1.png';\"></td> <td><div><div class='tbTitle'>Name App</div></div></td> <td rowspan='2' class='EndText'><div class='tbmenu'>...</div></td></tr><tr><td><div class='tbVersion'>ValueVersion</div></td> </tr><tr class='tbBottom'></tr> </table>";
+        var rows="";
+           
+		{
+			var a_row=row_sample
+			.replace("img/defcat.png", "http://www.biamode.com/Images/offerIC1.png")
+			.replace("Name App",ppt("تمامی پیشنهادات"))
+			.replace("ValueVersion","")
+			.replace("codelink",-1); 
+			rows=rows+a_row;
+		}
+
+        for(var i=0;i<jdata.items.length;i++){
+            var a_row=row_sample
+            .replace("img/defcat.png",jdata.items[i].icon)
+            .replace("Name App",ppt(jdata.items[i].name))
+            .replace("ValueVersion","")
+            .replace("codelink",jdata.items[i].id); 
+            rows=rows+a_row;
+        } 
+        $(".List_itemsM").append(rows);
+
+        //run_GetListApp=false;
+    });
+}
+
+function tbList_onscroll()
+{
+    var sy=window.scrollY;
+    var sh=document.documentElement.clientHeight;
+    if((sy)>sh)
+    {
+        if(run_GetListApp)return;
+        run_GetListApp=true;
+        GetListApp();
+    }
+}
+tbList_onscroll();
+ 
+function tbList_onclick(val)
+{
+    ChengeUrl("tk_prods.html#cat="+val); 
+
+//     window.location.assign("#pid="+val); 
+//     QueryString.pid=val;
+//     $(".List_items").empty();
+//     GetListApp();
+}
+
+//window.outerHeight;//outerHeight//innerHeight
+//document.getElementById("test").innerText= " innerHeight:"+window.innerHeight +"\n" + "sy:"+sy;
+</script>
+<div class='item_row'>
+
+</div>
+</body>
+
+</html>

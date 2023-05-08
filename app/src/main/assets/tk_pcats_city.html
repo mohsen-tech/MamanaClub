@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <link href="style.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet"> 
+
+    <style type="text/css">@import url("fonts/aaa.css");</style>
+    <script type="text/javascript" src="js/ul.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset="UTF-8"> 
+</head>
+
+
+<body onscroll="tbList_onscroll()">
+
+<div class="SampleTB" style="display: none;">
+ <table class='tbList' id='tbList' border=0> 
+   <tr> 
+
+
+     <td rowspan='2' class='EndText'>
+      <div class='tbmenu'  onclick='tbList_onclick("ccity",codelink);' >ﻣﻨﺎﻃﻖ</div>
+     </td>
+     
+     <td>
+       <div>
+           <div class='tbTitle' onclick='tbOpen_onclick("ccity",codelink)'>Name App</div>
+       </div>
+     </td> 
+
+     <td rowspan='2' class='tbImagetk'>
+       <img  onclick='tbOpen_onclick("ccity",codelink)' class='tbImagetkC' src='img/bulbgrey.png' onerror="this.onerror=null;this.src='img/tk_logodf1.png';">
+     </td>
+   </tr>
+
+   <tr>
+   <td>
+     <div class='tbVersion'>ValueVersion</div>
+   </td> 
+   </tr><tr class='tbBottom'></tr> 
+  </table>
+</div>
+
+<div class="List_items">
+
+</div>
+
+
+<script>
+//720x1280 
+var QueryString=GetQueryString();
+if(!QueryString.pid)QueryString.pid=0;
+if(QueryString.Start=="1")SetDV("bycity","");
+if(QueryString.city)
+{
+   $(".tbmenu").css({"display": "none"});
+}
+if(window.JSInterface)
+{
+    window.alert=window.JSInterface.Alert;
+}
+ 
+
+GetListApp();
+var run_GetListApp=false;
+function GetListApp()
+{
+    var urlGet=urlsite_tk+"/wservice/default.aspx?app_test=1&Action=Cats&module=Cnt&type=City&usrid=&showimage=1&sort=1&cat=0&scat=0&id=&pid="+QueryString.pid+"&relid=0";
+    var jdata=[];
+
+    $(".List_items").append("");
+
+    LoadGetJson(urlGet,function(val,dEnd){
+        jdata=val;  
+        var row_sample=$(".SampleTB").html();
+        var rows="";  
+         
+        if((!jdata.items)|(!jdata))
+        {
+            $(".List_items").append("<center class='bzoodi' style='font-family: f9;'>"+ppt("به زودی")+"</center>");
+        }
+      
+
+        if(jdata.items)
+        {
+            for(var i=0;i<jdata.items.length;i++){
+                var a_row=row_sample
+                .replace("a.png",jdata.items[i].icon)
+                .replace("Name App",ppt(jdata.items[i].name))
+                .replace("ValueVersion","")
+                .replace("codelink",jdata.items[i].id)
+                .replace("codelink",jdata.items[i].id)
+                .replace("codelink",jdata.items[i].id)
+                .replace("codelink",jdata.items[i].id)
+                .replace("ccity",jdata.items[i].name)
+                .replace("ccity",jdata.items[i].name)
+                .replace("ccity",jdata.items[i].name)
+                .replace("ccity",jdata.items[i].name); 
+                rows=rows+a_row;
+            } 
+            $(".List_items").append(rows);
+        }
+        
+        
+        run_GetListApp=false;
+    });
+}
+
+function tbList_onscroll()
+{
+    var sy=window.scrollY;
+    var sh=document.documentElement.clientHeight;
+    if((sy)>sh)
+    {
+        if(run_GetListApp)return;
+        run_GetListApp=true;
+        //GetListApp();
+    }
+}
+tbList_onscroll();
+
+
+function tbOpen_onclick(city,pid)
+{ 
+    var bycity=GetDV("bycity");
+    SetDV("citylocation",city);
+    if(!IsEmptyDV("bycity")){
+      ChengeUrl("tk_prods.html#city="+encodeURI(bycity)+"&area="+encodeURI(city));  
+      SetDV("bycity","");
+    }else
+      ChengeUrl("tk_prods.html#city="+encodeURI(city));
+}
+
+function tbList_onclick(city,pid){ 
+    ChengeUrl("tk_pcats_city.html#pid="+pid+"&city="+city); 
+    SetDV("bycity",city);
+    return;
+}
+
+
+ 
+
+function SendCommend(){
+  var alisa=$("#alisa").val();
+  var textCommend=$("#textCommend").val();
+  if(textCommend=="")return;
+
+  textCommend=textCommend.replace("\n","<br>").replace("\r","").replace("\"","");
+  LoadGetJson(urlsite_tk+"/wservice/?Action=Comment&relid="+QueryString.pid+"&Alias="+alisa+"&cmd="+textCommend,SuccessSendCommend);
+}
+   
+</script>
+<div class='item_row'>
+
+</div>
+</body>
+
+</html>

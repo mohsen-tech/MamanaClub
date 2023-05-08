@@ -1,0 +1,159 @@
+﻿<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <link href="style.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet"> 
+
+    <style type="text/css">@import url("fonts/aaa.css");</style>
+    <script type="text/javascript" src="js/ul.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/parsePersian.js"></script>
+    <meta charset="UTF-8"> 
+</head>
+
+
+<body onscroll="tbList_onscroll()">
+
+<div class="SampleTB" style="display: none;">
+<table class='tbList' id='tbList' onclick='tbList_onclick("codelink")'  border=0> 
+	<tr>
+		<td rowspan='2' class='tbImagetk'>
+			<div class='tbmenu'>...</div>
+		</td>
+		<td>
+			<div>
+				<div class='tbTitle'>Name App</div>
+			</div>
+		</td> 
+		<td rowspan='2' class='EndText'>
+			<img class='tbImagetk2' src='img/defcat.png'  >
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div class='tbVersion'>ValueVersion</div>
+		</td> 
+	</tr>
+	<tr class='tbBottom'>
+	</tr>
+</table>
+</div>
+
+
+
+<div class="List_itemsM">
+ 
+</div>
+
+
+<script>
+//720x1280 
+var QueryString=GetQueryString();
+if(!QueryString.pid)QueryString.pid=0;
+
+if(window.JSInterface)
+{
+    window.alert=window.JSInterface.Alert;
+}
+ 
+
+GetListApp();
+var run_GetListApp=false;
+function GetListApp()
+{
+    var urlGet=urlsite_tk+"/wservice/default.aspx?app_test=1&Action=Cats&module=Cnt&type=GiftCard&usrid=&AutoLang=FA&showimage=2&sort=1&fromrec=0&maxno=20&cat=&scat=&id=&pid=&relid=&rate=&cmd=&_t=1423389509572";
+    var jdata=[];
+    LoadGetJson(urlGet,function(val,dEnd){
+        jdata=val;  
+        var row_sample=$(".SampleTB").html();
+        var rows="";
+           
+		{//Facebook
+			var a_row=row_sample
+			.replace("img/defcat.png","img/nte/Facebook-icon.png")
+			.replace("Name App",ppt("Facebook"))
+			.replace("ValueVersion","")
+			.replace("codelink","https://www.facebook.com/pages/%D8%AA%D8%AE%D9%81%DB%8C%D9%81-2020/1396495327325080"); 
+			rows=rows+a_row;
+		}
+ 
+
+		{//GooglePlus
+			var a_row=row_sample
+			.replace("img/defcat.png","img/nte/GooglePlus-icon.png")
+			.replace("Name App",ppt("GooglePlus"))
+			.replace("ValueVersion","")
+			.replace("codelink","https://plus.google.com/117342231310064163161"); 
+			rows=rows+a_row;
+		}
+ 
+		{//Instagram
+			var a_row=row_sample
+			.replace("img/defcat.png","img/nte/Instagram-icon.png")
+			.replace("Name App",ppt("Instagram"))
+			.replace("ValueVersion","")
+			.replace("codelink","http://instagram.com/biamode/"); 
+			rows=rows+a_row;
+		}
+ 
+		{//Vimeo
+			var a_row=row_sample
+			.replace("img/defcat.png","img/nte/Vimeo-icon.png")
+			.replace("Name App",ppt("Vimeo"))
+			.replace("ValueVersion","")
+			.replace("codelink", "http://www.biamode.com/RSS/GiftCard.aspx");
+			rows=rows+a_row;
+		}
+ 
+		{//LinkedIn
+			var a_row=row_sample
+			.replace("img/defcat.png","img/nte/LinkedIn-icon.png")
+			.replace("Name App",ppt("LinkedIn"))
+			.replace("ValueVersion","")
+			.replace("codelink","https://www.linkedin.com/company/6388655?trk=tyah&trkInfo=idx%3A1-1-1%2CtarId%3A1424354978130%2Ctas%3A%D8%AA%D8%AE%D9%81%DB%8C%D9%81+2020"); 
+			rows=rows+a_row;
+		}
+ 
+		{//Twitter
+			var a_row=row_sample
+			.replace("img/defcat.png","img/nte/Twitter-icon.png")
+			.replace("Name App",ppt("Twitter"))
+			.replace("ValueVersion","")
+			.replace("codelink", "http://www.biamode.com/Content/AboutUs/%D8%AF%D8%B1%D8%A8%D8%A7%D8%B1%D9%87%20%D9%85%D8%A7.aspx#");
+			rows=rows+a_row;
+		}
+ 
+        $(".List_itemsM").append(rows);
+
+        //run_GetListApp=false;
+    });
+}
+
+function tbList_onscroll()
+{
+    var sy=window.scrollY;
+    var sh=document.documentElement.clientHeight;
+    if((sy)>sh)
+    {
+        if(run_GetListApp)return;
+        run_GetListApp=true;
+        //GetListApp();
+    }
+}
+
+tbList_onscroll();
+ 
+function tbList_onclick(val)
+{
+	JSInterface.OpenChrome(val);
+}
+ 
+</script>
+<div class='item_row'>
+
+</div>
+</body>
+
+</html>
